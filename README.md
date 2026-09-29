@@ -27,7 +27,7 @@ This project is a continuation and modernisation of [joaophi/tailscale-gnome-qs]
 
 ## Requirements
 
-- GNOME Shell 45 or newer
+- GNOME Shell 48 or newer
 - Tailscale installed and configured on your system
 - User configured as Tailscale operator (see [Configuration](#configuration) below)
 
