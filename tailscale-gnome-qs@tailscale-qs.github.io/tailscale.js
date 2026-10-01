@@ -383,6 +383,8 @@ export const Tailscale = GObject.registerClass(
                 });
                 this._timeouts.push(id);
             });
+            // mask = 2^12, aka 1<<12, aka [NotifyWatchOpt#NotifyPeerChanges](https://pkg.go.dev/tailscale.com/ipn#NotifyWatchOpt)
+            const watchMask = 4096;
 
             while (true) {
                 try {
@@ -398,7 +400,7 @@ export const Tailscale = GObject.registerClass(
                     this._parseResponse();
 
                     // eslint-disable-next-line no-await-in-loop
-                    for await (const update of this._client.stream('GET', '/localapi/v0/watch-ipn-bus?mask=4096', this._cancelable)) { // mask = 2^12, aka 1<<12, aka [NotifyWatchOpt#NotifyPeerChanges](https://pkg.go.dev/tailscale.com/ipn#NotifyWatchOpt)
+                    for await (const update of this._client.stream('GET', `/localapi/v0/watch-ipn-bus?mask=${watchMask}`, this._cancelable)) {
                         let shouldUpdate = false;
                         if (update.Prefs) {
                             this._prefs = update.Prefs;
